@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: destore-postgres
+    environment:
+      POSTGRES_USER: destore
+      POSTGRES_PASSWORD: destore123
+      POSTGRES_DB: destore
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U destore"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - destore-network
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: destore-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: destore
+      RABBITMQ_DEFAULT_PASS: destore123
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - destore-network
+
+volumes:
+  postgres_data:
+  rabbitmq_data:
+
+networks:
+  destore-network:
+    driver: bridge
