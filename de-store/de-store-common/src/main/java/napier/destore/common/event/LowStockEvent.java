@@ -1,9 +1,9 @@
 package napier.destore.common.event;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Data
@@ -39,6 +39,7 @@ public class LowStockEvent extends BaseEvent {
         return event;
     }
 
+    @JsonIgnore
     public String getAlertMessage() {
         if (outOfStock) {
             return String.format("OUT OF STOCK: %s (SKU: %s) is out of stock at store %d",

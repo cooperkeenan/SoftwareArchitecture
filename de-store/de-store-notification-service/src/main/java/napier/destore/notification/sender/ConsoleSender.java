@@ -16,16 +16,14 @@ public class ConsoleSender implements NotificationSender {
     @Override
     public boolean send(Notification notification) {
         log.info("\n" +
-                "╔══════════════════════════════════════════════════════════════╗\n" +
-                "║  NOTIFICATION TO STORE MANAGER                               ║\n" +
-                "╠══════════════════════════════════════════════════════════════╣\n" +
-                "║  Store ID:  {}\n" +
-                "║  Recipient: {}\n" +
-                "║  Type:      {}\n" +
-                "║  Priority:  {}\n" +
-                "║  Subject:   {}\n" +
-                "║  Message:   {}\n" +
-                "╚══════════════════════════════════════════════════════════════╝\n",
+                "NOTIFICATION TO STORE MANAGER \n" +
+                "Store ID:  {}\n" +
+                "Recipient: {}\n" +
+                "Type:      {}\n" +
+                "Priority:  {}\n" +
+                "Subject:   {}\n" +
+                "Message:   {}\n" +
+                "\n",
                 notification.getStoreId(),
                 notification.getRecipient(),
                 notification.getType(),

@@ -1,18 +1,14 @@
 package napier.destore.notification.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
 import napier.destore.common.event.EventTopics;
+import org.springframework.amqp.core.*;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class NotificationConfig {
@@ -29,14 +25,16 @@ public class NotificationConfig {
     }
 
     @Bean
-    public Binding lowStockBinding(Queue lowStockQueue, TopicExchange destoreExchange) {
+    public Binding lowStockBinding(@Qualifier("lowStockQueue") Queue lowStockQueue, 
+                                    TopicExchange destoreExchange) {
         return BindingBuilder.bind(lowStockQueue)
                 .to(destoreExchange)
                 .with(EventTopics.INVENTORY_LOW_STOCK);
     }
 
     @Bean
-    public Binding outOfStockBinding(Queue lowStockQueue, TopicExchange destoreExchange) {
+    public Binding outOfStockBinding(@Qualifier("lowStockQueue") Queue lowStockQueue, 
+                                      TopicExchange destoreExchange) {
         return BindingBuilder.bind(lowStockQueue)
                 .to(destoreExchange)
                 .with(EventTopics.INVENTORY_OUT_OF_STOCK);
@@ -49,7 +47,8 @@ public class NotificationConfig {
     }
 
     @Bean
-    public Binding financeDecisionBinding(Queue financeDecisionQueue, TopicExchange destoreExchange) {
+    public Binding financeDecisionBinding(@Qualifier("financeDecisionQueue") Queue financeDecisionQueue, 
+                                           TopicExchange destoreExchange) {
         return BindingBuilder.bind(financeDecisionQueue)
                 .to(destoreExchange)
                 .with(EventTopics.FINANCE_DECISION);
