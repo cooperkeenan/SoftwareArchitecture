@@ -15,10 +15,6 @@ spring:
             - Path=/price-service/**
           filters:
             - StripPrefix=1
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 10
-                redis-rate-limiter.burstCapacity: 20
         
         # Inventory Service Routes
         - id: inventory-service
@@ -67,17 +63,7 @@ spring:
       
       # Default filters applied to all routes
       default-filters:
-        - AddResponseHeader=X-Response-Time, ${requestStartTime}
-        - name: Retry
-          args:
-            retries: 3
-            statuses: BAD_GATEWAY
-            methods: GET
-            backoff:
-              firstBackoff: 10ms
-              maxBackoff: 50ms
-              factor: 2
-              basedOnPreviousValue: false
+        - AddResponseHeader=X-Response-Gateway, DE-Store-API-Gateway
 
 management:
   endpoints:
@@ -90,5 +76,5 @@ management:
 
 logging:
   level:
-    org.springframework.cloud.gateway: DEBUG
-    reactor.netty: INFO
+    '[org.springframework.cloud.gateway]': DEBUG
+    '[reactor.netty]': INFO

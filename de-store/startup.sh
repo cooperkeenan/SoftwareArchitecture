@@ -37,6 +37,9 @@ echo "⏳ Waiting for RabbitMQ to be ready..."
 sleep 5
 
 # Start all services
+start_service "API Gateway" "de-store-api-gateway" "8080"
+sleep 3
+
 start_service "Price Service" "de-store-price-service" "8081"
 sleep 3
 
