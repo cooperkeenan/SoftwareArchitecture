@@ -1,0 +1,94 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  
+  cloud:
+    gateway:
+      routes:
+        # Price Service Routes
+        - id: price-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/price-service/**
+          filters:
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+        
+        # Inventory Service Routes
+        - id: inventory-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/inventory-service/**
+          filters:
+            - StripPrefix=1
+        
+        # Finance Gateway Routes
+        - id: finance-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/finance-service/**
+          filters:
+            - StripPrefix=1
+        
+        # Notification Service Routes
+        - id: notification-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/notification-service/**
+          filters:
+            - StripPrefix=1
+        
+        # Loyalty Service Routes
+        - id: loyalty-service
+          uri: http://localhost:8085
+          predicates:
+            - Path=/loyalty-service/**
+          filters:
+            - StripPrefix=1
+      
+      # Global CORS configuration
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+      
+      # Default filters applied to all routes
+      default-filters:
+        - AddResponseHeader=X-Response-Time, ${requestStartTime}
+        - name: Retry
+          args:
+            retries: 3
+            statuses: BAD_GATEWAY
+            methods: GET
+            backoff:
+              firstBackoff: 10ms
+              maxBackoff: 50ms
+              factor: 2
+              basedOnPreviousValue: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: INFO

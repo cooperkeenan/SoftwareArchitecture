@@ -14,26 +14,43 @@
     <packaging>jar</packaging>
 
     <name>DE-Store API Gateway</name>
-    <description>API Gateway - single entry point for all clients</description>
+    <description>Central entry point for all DE-Store services</description>
+
+    <properties>
+        <spring-cloud.version>2023.0.1</spring-cloud.version>
+    </properties>
 
     <dependencies>
+        <!-- Spring Cloud Gateway -->
         <dependency>
-            <groupId>uk.ac.napier.destore</groupId>
-            <artifactId>de-store-common</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        
+        <!-- Actuator for health checks -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        
+        <!-- Security (for reactive web) -->
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

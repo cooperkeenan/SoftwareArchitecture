@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# DE-Store Service Starter
-# Starts all microservices in separate terminal windows
-
 echo "🚀 Starting DE-Store Services..."
 
 # Get the absolute path to the project directory
