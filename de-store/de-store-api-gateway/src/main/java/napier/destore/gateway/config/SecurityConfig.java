@@ -6,16 +6,7 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
-/**
- * Security configuration for API Gateway.
- * 
- * For the prototype, security is disabled to simplify testing.
- * In production, this would implement:
- * - JWT token validation
- * - OAuth2 integration
- * - Rate limiting per user
- * - IP whitelisting
- */
+
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {

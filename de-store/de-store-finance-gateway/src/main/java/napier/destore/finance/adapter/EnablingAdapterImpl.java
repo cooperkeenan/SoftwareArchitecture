@@ -5,18 +5,13 @@ import napier.destore.finance.domain.FinanceApplication;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-/**
- * Real implementation for production use.
- * Would make actual HTTP calls to Enabling finance API.
- * Only active in production profile.
- */
+
 @Component
 @Profile("prod")
 @Slf4j
 public class EnablingAdapterImpl implements EnablingAdapter {
 
-    // In production, inject RestTemplate or WebClient
-    // @Autowired private RestTemplate restTemplate;
+
 
     @Override
     public FinanceApplication submitApplication(FinanceApplication application) {

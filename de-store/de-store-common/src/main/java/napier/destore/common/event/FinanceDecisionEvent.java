@@ -1,13 +1,14 @@
 package napier.destore.common.event;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import napier.destore.common.dto.FinanceApplicationDto;
-
-import java.math.BigDecimal;
 
 @Data
 @SuperBuilder
@@ -70,10 +71,9 @@ public class FinanceDecisionEvent extends BaseEvent {
         if (isApproved() && monthlyPayment != null) {
             message.append(String.format(" Amount: £%s over %d months at £%s/month",
                     amount, termMonths, monthlyPayment));
-            
-            // Only show interest rate if we have it (not the approved amount)
+
             if (externalReference != null) {
-                message.append(" (5.9% APR)");  // Fixed rate from stub
+                message.append(" (5.9% APR)");  
             }
             message.append(".");
         }

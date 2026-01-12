@@ -4,24 +4,11 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
-/**
- * Custom authentication filter for API Gateway.
- * 
- * In production, this would:
- * - Validate JWT tokens
- * - Check API keys
- * - Verify user permissions
- * - Add user context to downstream requests
- * 
- * For the prototype, this is a placeholder showing where authentication
- * logic would be implemented.
- */
-@Component
+
 @Slf4j
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 Starting DE-Store Services..."
+echo "Starting DE-Store Services..."
 
 # Get the absolute path to the project directory
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -15,7 +15,7 @@ start_service() {
     
     osascript <<EOF
 tell application "Terminal"
-    do script "cd '$PROJECT_DIR/$service_dir' && echo '🟢 Starting $service_name on port $port...' && mvn spring-boot:run"
+    do script "cd '$PROJECT_DIR/$service_dir' && echo ' Starting $service_name on port $port...' && mvn spring-boot:run"
     set custom title of front window to "$service_name - Port $port"
 end tell
 EOF
@@ -28,12 +28,12 @@ if ! docker info > /dev/null 2>&1; then
 fi
 
 # Start RabbitMQ if not already running
-echo "🐰 Starting RabbitMQ..."
+echo "Starting RabbitMQ..."
 cd "$PROJECT_DIR"
 docker compose up -d rabbitmq
 
 # Wait a bit for RabbitMQ to be ready
-echo "⏳ Waiting for RabbitMQ to be ready..."
+echo "Waiting for RabbitMQ to be ready..."
 sleep 5
 
 # Start all services
@@ -55,9 +55,9 @@ sleep 3
 start_service "Loyalty Service" "de-store-loyalty-service" "8085"
 
 echo ""
-echo "✅ All services starting!"
+echo "All services starting"
 echo ""
-echo "📋 Service URLs:"
+echo "   Service URLs:"
 echo "   Price Service:        http://localhost:8081/swagger-ui.html"
 echo "   Inventory Service:    http://localhost:8082/swagger-ui.html"
 echo "   Finance Gateway:      http://localhost:8083/swagger-ui.html"
@@ -65,4 +65,4 @@ echo "   Notification Service: http://localhost:8084"
 echo "   Loyalty Service:      http://localhost:8085/swagger-ui.html"
 echo "   RabbitMQ Management:  http://localhost:15672 (destore/destore123)"
 echo ""
-echo "💡 Watch the Notification Service terminal for alerts!"
+
